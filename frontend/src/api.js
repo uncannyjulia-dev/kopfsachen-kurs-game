@@ -46,7 +46,10 @@ export const getDialogScene = (chapterSlug) =>
   )
 
 export const getJournal = (chapterSlug) =>
-  fetchAPI(`/journal-pages?filters[chapter][slug][$eq]=${chapterSlug}`)
+  fetchAPI(
+    `/journal-pages?filters[chapter][slug][$eq]=${chapterSlug}&sort=pageOrder:asc`,
+    'content.exercise,content.audioFile,content.image,content.backgroundImage,content.videoFile,content.videoPoster,chapter,stickers.asset'
+  )
 
 export const getExercises = () =>
   fetchAPI('/exercises')

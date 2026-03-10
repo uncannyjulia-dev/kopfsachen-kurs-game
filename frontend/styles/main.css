@@ -252,17 +252,18 @@ body {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  z-index: 10;
 }
 
 .side-tab {
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   border: none;
   transition: opacity var(--transition);
 }
@@ -318,15 +319,19 @@ body {
   line-height: 1.2;
 }
 
-/* Journal-Doppelseite */
+/* Journal – Einzelseite */
 .journal {
   background: var(--surface);
   border: 0.125rem solid var(--border);
   border-radius: var(--radius-md);
-  display: grid;
-  grid-template-columns: 1fr 0.25rem 1fr;
   min-height: 40vh;
   overflow: hidden;
+  overflow-y: auto;
+}
+
+.journal--single {
+  display: flex;
+  flex-direction: column;
 }
 
 .journal-spine {
@@ -334,11 +339,13 @@ body {
 }
 
 .journal-page {
-  padding: var(--space-lg);
+  padding: var(--space-md);
+  padding-left: var(--space-lg);
   font-family: var(--font-display);
   font-size: 0.875rem;
   line-height: 1.7;
   color: #1e3a5f;
+  flex: 1;
 }
 
 /* Audio-Player */
@@ -414,6 +421,7 @@ body {
   flex-direction: column;
   height: 100%;
   padding: var(--space-lg);
+  padding-left: 3rem;
   padding-bottom: var(--space-xl);
 }
 
@@ -1018,8 +1026,12 @@ body {
 
 .journal-screen .journal {
   width: 100%;
-  min-height: 40vh;
+  min-height: 0;
   flex: 1;
+}
+
+.journal-screen .journal-container {
+  padding-left: 3rem;
 }
 
 .journal-page-title {
@@ -1077,11 +1089,12 @@ body {
 }
 
 .journal-fullbg {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  min-height: 20vh;
   background-size: cover;
   background-position: center;
   background-color: var(--accent-light);
+  border-radius: var(--radius-sm);
   display: flex;
   align-items: flex-start;
   padding: var(--space-lg);
@@ -1121,6 +1134,117 @@ body {
 
 .journal-sticker {
   pointer-events: none;
+}
+
+/* Journal template: text_only */
+.journal-handwriting {
+  font-style: italic;
+}
+
+.journal-lined {
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 1.5em,
+    var(--border) 1.5em,
+    var(--border) calc(1.5em + 1px)
+  );
+  background-position: 0 0.4em;
+}
+
+.journal-right-hint {
+  margin-top: var(--space-md);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Journal template: image_layout_a */
+.journal-img-wrap {
+  flex-shrink: 0;
+  width: 40%;
+  text-align: center;
+}
+
+.journal-img-wrap .journal-img {
+  width: 100%;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.journal-img-caption {
+  display: block;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  margin-top: var(--space-xs);
+  font-style: italic;
+}
+
+.journal-img-text-body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Journal template: image_layout_b */
+.journal-fullbg .journal-overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.journal-fullbg .journal-overlay-text {
+  position: relative;
+  z-index: 1;
+}
+
+.journal-overlay--top { align-self: flex-start; }
+.journal-overlay--center { align-self: center; }
+.journal-overlay--bottom { align-self: flex-end; }
+
+/* Journal template: audio_player inline */
+.journal-audio-page .audio-player {
+  margin: var(--space-md) 0;
+}
+
+.audio-title {
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: var(--space-xs);
+}
+
+.audio-duration {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.audio-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-top: var(--space-md);
+  max-height: 6em;
+  overflow-y: auto;
+}
+
+.journal-after-text {
+  margin-top: var(--space-md);
+  font-style: italic;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+/* Journal template: video */
+.journal-video-iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: var(--radius-sm);
+}
+
+.journal-video-caption {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: var(--space-xs);
+  text-align: center;
 }
 
 /* ── Cave Screen ────────────────────────────────────────────── */

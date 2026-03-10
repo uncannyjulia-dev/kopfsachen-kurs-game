@@ -5,15 +5,20 @@
   "description": "Kopfsachen Strapi CMS",
   "scripts": {
     "develop": "strapi develop",
-    "start":   "strapi start",
-    "build":   "strapi build",
-    "deploy":  "strapi deploy"
+    "start": "strapi start",
+    "build": "strapi build",
+    "deploy": "strapi deploy"
   },
   "dependencies": {
-    "@strapi/strapi": "5.x",
-    "@strapi/plugin-users-permissions": "5.x",
     "@strapi/plugin-cloud": "5.x",
-    "better-sqlite3": "9.x"
+    "@strapi/plugin-users-permissions": "5.x",
+    "@strapi/strapi": "5.x",
+    "better-sqlite3": "9.x",
+    "esbuild": "^0.27.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.3",
+    "styled-components": "^6.3.11"
   },
   "engines": {
     "node": ">=18.0.0 <=22.x.x",

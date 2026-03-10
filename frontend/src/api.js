@@ -10,8 +10,9 @@ const STRAPI_TOKEN = import.meta.env.VITE_STRAPI_TOKEN ?? ''
 // Einfacher In-Memory Cache pro Session
 const _cache = new Map()
 
-async function fetchAPI(path) {
-  const url = `${STRAPI_URL}/api${path}?populate=deep`
+async function fetchAPI(path, populate = '*') {
+  const sep = path.includes('?') ? '&' : '?'
+  const url = `${STRAPI_URL}/api${path}${sep}populate=${populate}`
 
   if (_cache.has(url)) return _cache.get(url)
 
@@ -38,7 +39,10 @@ export const getChapter = (slug) =>
   fetchAPI(`/chapters?filters[slug][$eq]=${slug}`)
 
 export const getDialogScene = (chapterSlug) =>
-  fetchAPI(`/dialog-scenes?filters[chapter][slug][$eq]=${chapterSlug}`)
+  fetchAPI(
+    `/dialog-scenes?filters[chapter][slug][$eq]=${chapterSlug}&sort=sceneOrder:asc`,
+    'nodes.choices,chapter'
+  )
 
 export const getJournal = (chapterSlug) =>
   fetchAPI(`/journal-pages?filters[chapter][slug][$eq]=${chapterSlug}`)

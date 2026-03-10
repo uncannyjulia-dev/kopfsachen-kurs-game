@@ -4,8 +4,9 @@
 
 // Vite ersetzt import.meta.env.VITE_* zur Build-Zeit mit den
 // tatsächlichen Werten aus .env.local / .env.production
-const STRAPI_URL   = import.meta.env.VITE_STRAPI_URL   ?? 'http://localhost:1337'
-const STRAPI_TOKEN = import.meta.env.VITE_STRAPI_TOKEN ?? ''
+const env = import.meta.env || {}
+const STRAPI_URL   = env.VITE_STRAPI_URL   || 'http://localhost:1337'
+const STRAPI_TOKEN = env.VITE_STRAPI_TOKEN || ''
 
 // Einfacher In-Memory Cache pro Session
 const _cache = new Map()

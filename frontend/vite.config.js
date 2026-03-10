@@ -2,7 +2,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: '/kopfsachen-kurs-game/',
+  base: '/',
   build: {
     outDir: 'dist',
     sourcemap: false,

@@ -1,0 +1,60 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dialog_nodes",
+  "info": {
+    "singularName": "dialog-node",
+    "pluralName": "dialog-nodes",
+    "displayName": "Dialog Node",
+    "description": "Einzelne Dialog-Zeile. Nodes werden via nextNodeId verkettet."
+  },
+  "options": { "draftAndPublish": false },
+  "attributes": {
+    "scene": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::dialog-scene.dialog-scene",
+      "inversedBy": "nodes"
+    },
+    "nodeId": {
+      "type": "integer",
+      "required": true,
+      "min": 1,
+      "description": "Eindeutige ID innerhalb der Szene"
+    },
+    "speaker": {
+      "type": "enumeration",
+      "enum": ["toni", "user", "narrator", "noen", "furi"],
+      "required": true,
+      "default": "toni"
+    },
+    "text": {
+      "type": "richtext",
+      "required": true
+    },
+    "emotion": {
+      "type": "enumeration",
+      "enum": ["neutral", "happy", "sad", "surprised", "thinking", "worried"],
+      "default": "neutral"
+    },
+    "nextNodeId": {
+      "type": "integer",
+      "description": "Naechster Node. Leer = Ende der Szene."
+    },
+    "choices": {
+      "type": "component",
+      "repeatable": true,
+      "component": "dialog.choice",
+      "description": "Antwortoptionen fuer Verzweigungen. Nur setzen wenn speaker=user und Branching gewuenscht."
+    },
+    "savesAs": {
+      "type": "string",
+      "description": "Optionaler Variablenname um Nutzerantwort zu speichern, z.B. stimmung_start"
+    },
+    "triggerAction": {
+      "type": "enumeration",
+      "enum": ["none", "open_journal", "open_cave", "open_exercise", "open_help", "input_username"],
+      "default": "none",
+      "description": "Optionale App-Aktion die dieser Node ausloest"
+    }
+  }
+}

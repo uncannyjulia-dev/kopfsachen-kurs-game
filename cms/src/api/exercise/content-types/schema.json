@@ -1,0 +1,67 @@
+{
+  "kind": "collectionType",
+  "collectionName": "exercises",
+  "info": {
+    "singularName": "exercise",
+    "pluralName": "exercises",
+    "displayName": "Exercise",
+    "description": "Uebung – Audio, Text oder interaktiv"
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": ["audio", "guided_text", "interactive"],
+      "required": true,
+      "default": "audio"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": ["atemübung", "achtsamkeit", "innerer_ort", "reflexion", "sonstiges"],
+      "default": "sonstiges"
+    },
+    "duration": {
+      "type": "integer",
+      "description": "Dauer in Sekunden"
+    },
+    "description": {
+      "type": "richtext",
+      "description": "Kurze Einleitung vor der Uebung"
+    },
+    "audioFile": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["files"],
+      "description": "Nur bei type=audio"
+    },
+    "guidedText": {
+      "type": "richtext",
+      "description": "Anleitungstext – nur bei type=guided_text"
+    },
+    "subtitle": {
+      "type": "richtext",
+      "description": "Untertitel waehrend der Audio-Wiedergabe"
+    },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"],
+      "description": "Vorschaubild in der Schachtel"
+    },
+    "chapters": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::chapter.chapter",
+      "inversedBy": "exercises"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "kopfsachen-cms",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Kopfsachen Strapi CMS",
+  "scripts": {
+    "develop": "strapi develop",
+    "start":   "strapi start",
+    "build":   "strapi build",
+    "deploy":  "strapi deploy"
+  },
+  "dependencies": {
+    "@strapi/strapi": "5.x",
+    "@strapi/plugin-users-permissions": "5.x",
+    "@strapi/plugin-cloud": "5.x",
+    "better-sqlite3": "9.x"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=22.x.x",
+    "npm": ">=6.0.0"
+  }
+}

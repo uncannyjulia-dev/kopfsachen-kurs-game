@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cave_assets",
+  "info": {
+    "singularName": "cave-asset",
+    "pluralName": "cave-assets",
+    "displayName": "Cave Asset",
+    "description": "Sticker, Hintergruende und Sounds fuer den inneren sicheren Ort"
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "description": "Anzeigename im Karussell, z.B. Eisbecher"
+    },
+    "key": {
+      "type": "uid",
+      "targetField": "label",
+      "required": true,
+      "description": "Eindeutiger Schluessel der im Code und in Sticker-Placements referenziert wird"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": ["background", "sticker", "sound"],
+      "required": true
+    },
+    "file": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images", "files"],
+      "description": "JPG/PNG fuer Bilder und Hintergruende, MP3 fuer Sounds"
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"],
+      "description": "Kleines Vorschaubild fuer das Karussell (optional, sonst wird file verwendet)"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 99,
+      "description": "Reihenfolge im Auswahlkarussell"
+    },
+    "isDefault": {
+      "type": "boolean",
+      "default": false,
+      "description": "Beim ersten Cave-Besuch vorausgewaehlt"
+    }
+  }
+}

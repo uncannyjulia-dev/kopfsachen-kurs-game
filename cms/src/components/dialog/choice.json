@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_dialog_choices",
+  "info": {
+    "displayName": "Choice",
+    "description": "Eine Antwortoption in einem Dialog mit Verzweigung"
+  },
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true,
+      "description": "Button-Beschriftung, z.B. Ja klar! oder Ich versuch's"
+    },
+    "nextNodeId": {
+      "type": "integer",
+      "required": true,
+      "description": "Welcher DialogNode nach dieser Antwort kommt"
+    },
+    "savesAs": {
+      "type": "string",
+      "description": "Optionaler Variablenname, z.B. hat_zugestimmt"
+    }
+  }
+}

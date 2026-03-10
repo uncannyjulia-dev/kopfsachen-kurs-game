@@ -1,0 +1,389 @@
+/* styles/main.css
+   Globale Styles & CSS-Variablen für Kopfsachen.
+   Akzentfarbe ist als --accent definiert und kann später
+   von der Illustratorin einfach angepasst werden.
+*/
+
+/* ── CSS Custom Properties ─────────────────────────────────── */
+:root {
+  /* Farben – Platzhalter bis Illustratorin liefert */
+  --accent:        #7C3AED;   /* Lila aus Wireframes – wird ersetzt */
+  --accent-light:  #EDE9FE;
+  --accent-dark:   #4C1D95;
+  --bg:            #FAFAF9;
+  --surface:       #FFFFFF;
+  --text:          #1C1917;
+  --text-muted:    #78716C;
+  --border:        #E7E5E4;
+
+  /* Spacing */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  40px;
+
+  /* Typografie – wird von Illustratorin noch definiert */
+  --font-body:    system-ui, sans-serif;
+  --font-display: system-ui, sans-serif;
+
+  /* Radii */
+  --radius-sm:  8px;
+  --radius-md:  16px;
+  --radius-lg:  24px;
+  --radius-pill: 999px;
+
+  /* Übergänge */
+  --transition: 220ms ease;
+}
+
+/* ── Reset ──────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;            /* Kein Scrollen auf Root-Ebene */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* ── App Shell ──────────────────────────────────────────────── */
+#app {
+  width: 100%;
+  height: 100dvh;              /* dynamic viewport height für Mobile */
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Screen-Basis ───────────────────────────────────────────── */
+.screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Screen-Übergang */
+.screen-enter {
+  animation: screenIn var(--transition) forwards;
+}
+
+@keyframes screenIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Gemeinsame UI-Komponenten ──────────────────────────────── */
+
+/* Top-Bar */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  flex-shrink: 0;
+}
+
+/* Menü-Button (3 Punkte) */
+.btn-menu {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+/* Primär-Button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 14px var(--space-xl);
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity var(--transition), transform var(--transition);
+  font-family: var(--font-body);
+}
+
+.btn-primary:active {
+  opacity: 0.85;
+  transform: scale(0.98);
+}
+
+/* Sekundär-Button */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px var(--space-lg);
+  background: transparent;
+  color: var(--accent);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-pill);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition);
+  font-family: var(--font-body);
+}
+
+.btn-secondary:active {
+  background: var(--accent-light);
+}
+
+/* Sprechblase (Novel / Dialog) */
+.speech-bubble {
+  background: var(--surface);
+  border: 2.5px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: var(--space-md) var(--space-lg);
+  position: relative;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Pfeil der Sprechblase nach unten-links (zu Toni) */
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 40px;
+  border: 7px solid transparent;
+  border-top-color: var(--accent);
+}
+
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 41px;
+  border: 6px solid transparent;
+  border-top-color: var(--surface);
+  z-index: 1;
+}
+
+/* Linke Tab-Leiste (Novel / Journal) */
+.side-tabs {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.side-tab {
+  width: 48px;
+  height: 48px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  border: none;
+  transition: opacity var(--transition);
+}
+
+.side-tab:active { opacity: 0.7; }
+.side-tab--green  { background: #4ADE80; }
+.side-tab--purple { background: #A78BFA; }
+.side-tab--orange { background: #FB923C; }
+
+/* Emoji-Likert-Skala */
+.likert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 2.5px solid var(--accent);
+}
+
+.likert-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.likert-emoji {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  transition: border-color var(--transition), transform var(--transition);
+}
+
+.likert-item.selected .likert-emoji,
+.likert-item:active .likert-emoji {
+  border-color: var(--accent);
+  transform: scale(1.15);
+}
+
+.likert-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Journal-Doppelseite */
+.journal {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  display: grid;
+  grid-template-columns: 1fr 4px 1fr;
+  min-height: 320px;
+  overflow: hidden;
+}
+
+.journal-spine {
+  background: var(--border);
+}
+
+.journal-page {
+  padding: var(--space-lg);
+  font-family: var(--font-display);
+  font-size: 14px;
+  line-height: 1.7;
+  color: #1e3a5f;
+}
+
+/* Audio-Player */
+.audio-player {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+}
+
+.audio-seek {
+  width: 100%;
+  accent-color: var(--accent);
+  height: 4px;
+  cursor: pointer;
+}
+
+.audio-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+}
+
+.audio-time {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.audio-btn {
+  background: none;
+  border: 2px solid var(--text);
+  border-radius: var(--radius-pill);
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.audio-btn--play {
+  width: 64px;
+  height: 64px;
+  background: var(--text);
+  color: #fff;
+  font-size: 20px;
+  border-color: var(--text);
+}
+
+/* Placeholder-Text für leere Screens */
+.screen-placeholder {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  color: var(--text-muted);
+  padding: var(--space-xl);
+  text-align: center;
+}
+
+.screen-placeholder .icon {
+  font-size: 48px;
+  opacity: 0.4;
+}
+
+.screen-placeholder h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.screen-placeholder p {
+  font-size: 14px;
+  max-width: 260px;
+}
+
+/* Debug-Badge für Entwicklung */
+.dev-badge {
+  position: fixed;
+  bottom: var(--space-md);
+  right: var(--space-md);
+  background: #1C1917;
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: 9999;
+}

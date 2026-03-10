@@ -1,0 +1,20 @@
+node_modules/
+
+# Build-Outputs
+frontend/dist/
+cms/build/
+cms/.cache/
+
+# Lokale Env-Dateien – NIE committen
+.env.local
+.env.*.local
+frontend/.env.local
+
+# Strapi
+cms/.tmp/
+cms/exports/
+cms/public/uploads/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "help_resources",
+  "info": {
+    "singularName": "help-resource",
+    "pluralName": "help-resources",
+    "displayName": "Help Resource",
+    "description": "Krisenanlaufstellen und Hilfsangebote"
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "richtext",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "availability": {
+      "type": "string",
+      "description": "z.B. 24/7 oder Mo, Di & Do 19-21 Uhr"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 99
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    }
+  }
+}

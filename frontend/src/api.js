@@ -1,0 +1,56 @@
+// api.js
+// Strapi Cloud Client – Vanilla JS, kein Build-Step.
+// Config via data-Attribute im HTML oder Konstante hier.
+
+// Vite ersetzt import.meta.env.VITE_* zur Build-Zeit mit den
+// tatsächlichen Werten aus .env.local / .env.production
+const STRAPI_URL   = import.meta.env.VITE_STRAPI_URL   ?? 'http://localhost:1337'
+const STRAPI_TOKEN = import.meta.env.VITE_STRAPI_TOKEN ?? ''
+
+// Einfacher In-Memory Cache pro Session
+const _cache = new Map()
+
+async function fetchAPI(path) {
+  const url = `${STRAPI_URL}/api${path}?populate=deep`
+
+  if (_cache.has(url)) return _cache.get(url)
+
+  const res = await fetch(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      ...(STRAPI_TOKEN ? { Authorization: `Bearer ${STRAPI_TOKEN}` } : {}),
+    },
+  })
+
+  if (!res.ok) throw new Error(`Strapi ${res.status}: ${path}`)
+
+  const json = await res.json()
+  _cache.set(url, json.data)
+  return json.data
+}
+
+// ── API-Funktionen ────────────────────────────────────────────
+
+export const getChapters = () =>
+  fetchAPI('/chapters?sort=order:asc')
+
+export const getChapter = (slug) =>
+  fetchAPI(`/chapters?filters[slug][$eq]=${slug}`)
+
+export const getDialogScene = (chapterSlug) =>
+  fetchAPI(`/dialog-scenes?filters[chapter][slug][$eq]=${chapterSlug}`)
+
+export const getJournal = (chapterSlug) =>
+  fetchAPI(`/journal-pages?filters[chapter][slug][$eq]=${chapterSlug}`)
+
+export const getExercises = () =>
+  fetchAPI('/exercises')
+
+export const getExercise = (id) =>
+  fetchAPI(`/exercises/${id}`)
+
+export const getCaveAssets = () =>
+  fetchAPI('/cave-assets')
+
+export const getHelpResources = () =>
+  fetchAPI('/help-resources')

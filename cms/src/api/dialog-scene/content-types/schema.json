@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "dialog_scenes",
+  "info": {
+    "singularName": "dialog-scene",
+    "pluralName": "dialog-scenes",
+    "displayName": "Dialog Scene",
+    "description": "Eine Szene mit Hintergrund, Charakter und Dialog-Nodes"
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "chapter": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::chapter.chapter",
+      "inversedBy": "dialogScenes"
+    },
+    "sceneOrder": {
+      "type": "integer",
+      "required": true,
+      "default": 1,
+      "min": 1
+    },
+    "background": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "character": {
+      "type": "enumeration",
+      "enum": ["toni", "noen", "furi", "niemand"],
+      "default": "toni",
+      "required": true
+    },
+    "startNodeId": {
+      "type": "integer",
+      "required": true,
+      "default": 1
+    },
+    "nodes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::dialog-node.dialog-node",
+      "mappedBy": "scene"
+    }
+  }
+}

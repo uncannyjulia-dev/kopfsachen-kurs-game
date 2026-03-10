@@ -1,0 +1,59 @@
+{
+  "kind": "collectionType",
+  "collectionName": "chapters",
+  "info": {
+    "singularName": "chapter",
+    "pluralName": "chapters",
+    "displayName": "Chapter",
+    "description": "Kurskapitel – je eine 45-Minuten-Einheit"
+  },
+  "options": { "draftAndPublish": true },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "order": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "unlockAfterDays": {
+      "type": "integer",
+      "required": true,
+      "default": 0,
+      "min": 0
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "coverImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "dialogScenes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::dialog-scene.dialog-scene",
+      "mappedBy": "chapter"
+    },
+    "journalPages": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::journal-page.journal-page",
+      "mappedBy": "chapter"
+    },
+    "exercises": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::exercise.exercise",
+      "mappedBy": "chapters"
+    }
+  }
+}

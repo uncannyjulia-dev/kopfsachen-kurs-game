@@ -21,7 +21,7 @@ const DEMO_NODES = [
     emotion: 'neutral',
     nextNodeId: null,
     choices: [
-      { text: 'Ja, los geht's!', nextNodeId: 3 },
+      { text: 'Ja, los gehts!', nextNodeId: 3 },
       { text: 'Erzähl mir mehr', nextNodeId: 4 },
     ],
   },

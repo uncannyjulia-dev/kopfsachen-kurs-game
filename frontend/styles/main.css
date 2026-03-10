@@ -510,6 +510,36 @@ body {
   border-color: var(--accent-light);
 }
 
+/* Name input */
+.novel-input {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  align-items: center;
+}
+
+.novel-name-input {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.novel-name-input:focus {
+  border-color: var(--accent);
+}
+
+.novel-input-submit {
+  flex-shrink: 0;
+  padding: var(--space-sm) var(--space-md);
+}
+
 /* Loading */
 .novel-loading {
   flex: 1;

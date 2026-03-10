@@ -2,7 +2,7 @@
 // Dialog-Engine: Sprechblasen, Choices, Likert-Inline, Character-Wechsel, Spielstand.
 
 import { getDialogScene } from '../api.js'
-import { getProgress, saveProgress, saveQuestionnaire } from '../store.js'
+import { getProgress, saveProgress, saveQuestionnaire, getSettings, saveSettings } from '../store.js'
 import { openSideMenu } from '../components/SideMenu.js'
 
 // ── Demo-Daten: Intro inkl. Prä-Fragebogen (aus Konzept) ──────
@@ -42,11 +42,13 @@ const DEMO_NODES = [
     emotion: null,
     nextNodeId: 6,
     choices: [],
+    inputType: 'text',
+    inputPlaceholder: 'Dein Name …',
   },
   {
     nodeId: 6,
     speaker: 'toni',
-    text: 'Freut mich dich zu treffen!',
+    text: 'Hi [Username], freut mich dich zu treffen!',
     emotion: 'happy',
     nextNodeId: 7,
     choices: [],
@@ -469,13 +471,17 @@ export function NovelScreen(path) {
       </div>
       <div class="novel-likert" style="display:none"></div>
       <div class="novel-choices"></div>
+      <div class="novel-input" style="display:none">
+        <input type="text" class="novel-name-input" placeholder="Dein Name …" maxlength="30" autocomplete="off" />
+        <button class="btn-primary novel-input-submit" type="button">OK</button>
+      </div>
       <button class="novel-continue btn-primary" type="button">Weiter</button>
     </div>
     <div class="side-tabs">
-      <button class="side-tab side-tab--green" type="button" data-action="journal" title="Tagebuch">&#128214;</button>
-      <button class="side-tab side-tab--purple" type="button" data-action="cave" title="Sicherer Ort">&#127807;</button>
-      <button class="side-tab side-tab--orange" type="button" data-action="toolbox" title="Schachtel">&#129520;</button>
-      <button class="side-tab" style="background:var(--border)" type="button" data-action="menu" title="Menü">&#9776;</button>
+      <button class="side-tab side-tab--green" type="button" data-action="journal" title="Tagebuch" style="display:none">&#128214;</button>
+      <button class="side-tab side-tab--purple" type="button" data-action="cave" title="Sicherer Ort" style="display:none">&#127807;</button>
+      <button class="side-tab side-tab--orange" type="button" data-action="toolbox" title="Schachtel" style="display:none">&#129520;</button>
+      <button class="side-tab" style="background:var(--border);display:none" type="button" data-action="menu" title="Menü">&#9776;</button>
     </div>
     <div class="novel-loading">
       <p>Lade Dialog …</p>
@@ -500,16 +506,40 @@ export function NovelScreen(path) {
   const continueBtn  = el.querySelector('.novel-continue')
   const loadingEl    = el.querySelector('.novel-loading')
   const contentEl    = el.querySelector('.novel-content')
+  const nameInputEl  = el.querySelector('.novel-input')
+  const nameInput    = el.querySelector('.novel-name-input')
+  const nameSubmit   = el.querySelector('.novel-input-submit')
+
+  // Side-tab elements for progressive reveal
+  const tabJournal = el.querySelector('[data-action="journal"]')
+  const tabCave    = el.querySelector('[data-action="cave"]')
+  const tabToolbox = el.querySelector('[data-action="toolbox"]')
+  const tabMenu    = el.querySelector('[data-action="menu"]')
 
   let nodes = []
   let currentNode = null
   let likertAnswers = [] // Collect all inline Likert answers
+  let username = null    // Loaded from settings or entered by user
+
+  // Reveal a side-tab
+  function showTab(tab) { if (tab) tab.style.display = '' }
+
+  // Reveal tabs based on which nodes the user has already passed
+  function revealTabsForNode(nodeId) {
+    if (nodeId >= 40) showTab(tabMenu)
+    if (nodeId >= 50) showTab(tabToolbox)
+    if (nodeId >= 52) showTab(tabCave)
+    if (nodeId >= 58) showTab(tabJournal)
+  }
 
   // ── Node rendern ─────────────────────────────────────────
 
   function renderNode(node) {
     currentNode = node
     if (!node) return handleSceneEnd()
+
+    // Progressive tab reveal
+    revealTabsForNode(node.nodeId)
 
     const config = SPEAKER_CONFIG[node.speaker] || SPEAKER_CONFIG.narrator
 
@@ -531,8 +561,13 @@ export function NovelScreen(path) {
     bubble.style.borderColor = config.color
     bubble.style.color = node.speaker === 'narrator' ? 'var(--text-muted)' : 'var(--text)'
 
+    // Interpolate [Username] in text
+    const displayText = username
+      ? (node.text || '').replace(/\[Username\]/g, username)
+      : (node.text || '')
+
     // Text mit Typewriter-Effekt
-    typeText(bubble, node.text)
+    typeText(bubble, displayText)
 
     // Emotion als Data-Attribut (für späteres Character-Bild)
     el.dataset.emotion = node.emotion || 'neutral'
@@ -541,6 +576,19 @@ export function NovelScreen(path) {
     // Reset UI
     likertEl.style.display = 'none'
     likertEl.innerHTML = ''
+    nameInputEl.style.display = 'none'
+
+    // Text input (e.g. name entry)
+    if (node.inputType === 'text') {
+      continueBtn.style.display = 'none'
+      choicesEl.innerHTML = ''
+      choicesEl.style.display = 'none'
+      nameInputEl.style.display = ''
+      nameInput.placeholder = node.inputPlaceholder || 'Eingabe …'
+      nameInput.value = username || ''
+      nameInput.focus()
+      return
+    }
 
     // Inline-Likert (Fragebogen im Dialog)
     if (node.likert) {
@@ -629,6 +677,22 @@ export function NovelScreen(path) {
     likertEl.appendChild(scale)
   }
 
+  // ── Name input handler ──────────────────────────────────
+
+  function submitName() {
+    const name = nameInput.value.trim()
+    if (!name) return
+    username = name
+    saveSettings({ username: name })
+    nameInputEl.style.display = 'none'
+    goToNode(currentNode.nextNodeId)
+  }
+
+  nameSubmit.addEventListener('click', submitName)
+  nameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') submitName()
+  })
+
   // ── Typewriter ───────────────────────────────────────────
 
   let typeTimer = null
@@ -700,8 +764,8 @@ export function NovelScreen(path) {
     if (currentNode?.nextNodeId) {
       saveProgress({ currentChapter: slug, currentNodeId: currentNode.nextNodeId })
     } else {
-      // No next node = end of scene after trigger. Reset to avoid re-trigger loop.
-      saveProgress({ currentChapter: slug, currentNodeId: 0 })
+      // No next node — save current node so we resume here (not restart from 0)
+      saveProgress({ currentChapter: slug, currentNodeId: currentNode.nodeId })
     }
 
     const routes = {
@@ -766,11 +830,18 @@ export function NovelScreen(path) {
     loadingEl.style.display = 'none'
     contentEl.style.display = ''
 
+    // Load username from settings
+    const settings = await getSettings()
+    if (settings.username) username = settings.username
+
     // Fortschritt laden → ggf. an letzter Stelle weitermachen
     const progress = await getProgress()
     const startId = (progress.currentChapter === slug && progress.currentNodeId > 0)
       ? progress.currentNodeId
       : nodes[0]?.nodeId || 1
+
+    // Reveal tabs for all nodes up to the start point
+    revealTabsForNode(startId)
 
     goToNode(startId)
   }

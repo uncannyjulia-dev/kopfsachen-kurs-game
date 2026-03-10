@@ -2,7 +2,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  // Kein Framework-Plugin nötig – reines Vanilla JS
+  base: '/kopfsachen-kurs-game/',
   build: {
     outDir: 'dist',
     sourcemap: false,

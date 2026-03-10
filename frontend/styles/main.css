@@ -344,6 +344,123 @@ body {
   border-color: var(--text);
 }
 
+/* ── Novel Screen ──────────────────────────────────────────── */
+
+.novel-screen {
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.novel-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--accent-light) 0%, var(--bg) 60%);
+  z-index: 0;
+}
+
+.novel-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-lg);
+  padding-bottom: var(--space-xl);
+}
+
+.novel-speaker-label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-xs);
+  padding-left: var(--space-sm);
+}
+
+.novel-bubble-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-height: 0;
+}
+
+.novel-bubble {
+  width: 100%;
+  min-height: 80px;
+  font-size: 16px;
+  line-height: 1.6;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Narrator-Stil: kein Rand, kursiv */
+.novel-bubble--narrator .novel-bubble {
+  border-color: transparent;
+  background: transparent;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: var(--space-md) 0;
+}
+
+.novel-bubble--narrator .novel-bubble::before,
+.novel-bubble--narrator .novel-bubble::after {
+  display: none;
+}
+
+/* User-Stil: rechts ausgerichtet */
+.novel-bubble--user {
+  justify-content: flex-end;
+}
+
+.novel-bubble--user .novel-bubble {
+  border-color: var(--border);
+  background: var(--accent-light);
+  color: var(--text);
+  text-align: right;
+  max-width: 85%;
+}
+
+.novel-bubble--user .novel-bubble::after {
+  left: auto;
+  right: 40px;
+}
+
+.novel-bubble--user .novel-bubble::before {
+  left: auto;
+  right: 41px;
+}
+
+/* Choices */
+.novel-choices {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.novel-choice {
+  width: 100%;
+  text-align: center;
+}
+
+/* Weiter-Button */
+.novel-continue {
+  margin-top: var(--space-md);
+  align-self: center;
+  width: 100%;
+  max-width: 320px;
+}
+
+/* Loading */
+.novel-loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
 /* Placeholder-Text für leere Screens */
 .screen-placeholder {
   flex: 1;

@@ -22,7 +22,7 @@ router
   .on('/home',           () => HomeScreen())
   .on('/chapters',       () => ChaptersScreen())
   .on('/timecheck',      () => TimeCheckScreen())
-  .on('/novel',          () => NovelScreen())
+  .on('/novel',          (path) => NovelScreen(path))
   .on('/journal',        () => JournalScreen())
   .on('/cave',           () => CaveScreen())
   .on('/exercise',       () => ExerciseScreen())

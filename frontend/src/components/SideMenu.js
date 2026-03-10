@@ -23,7 +23,7 @@ export function openSideMenu() {
     </nav>
   `
 
-  document.body.appendChild(menuEl)
+  document.getElementById('app').appendChild(menuEl)
 
   // Close handlers
   menuEl.querySelector('.side-menu-backdrop').addEventListener('click', closeSideMenu)

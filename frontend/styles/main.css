@@ -126,6 +126,7 @@ body {
   background: var(--bg);
   overflow-y: auto;
   overflow-x: hidden;
+  contain: layout style;
 }
 
 /* Screen-Übergang */
@@ -728,6 +729,7 @@ body {
 
 .chapter-card {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: var(--space-md);
   padding: var(--space-md);
@@ -738,7 +740,10 @@ body {
   transition: border-color var(--transition);
   text-align: left;
   font-family: var(--font-body);
+  font-size: inherit;
   width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .chapter-card:active:not(:disabled) {
@@ -762,6 +767,10 @@ body {
 .chapter-number {
   width: 2.25rem;
   height: 2.25rem;
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  max-width: 2.25rem;
+  max-height: 2.25rem;
   border-radius: 50%;
   background: var(--accent-light);
   color: var(--accent);
@@ -771,6 +780,7 @@ body {
   font-weight: 700;
   font-size: 0.9375rem;
   flex-shrink: 0;
+  flex-grow: 0;
 }
 
 .chapter-card--current .chapter-number {
@@ -1403,7 +1413,7 @@ body {
 /* ── Side Menu ──────────────────────────────────────────────── */
 
 .side-menu {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 5000;
   pointer-events: none;

@@ -59,7 +59,7 @@ function mountDevNav(app, router) {
 
   const nav = document.createElement('div')
   nav.style.cssText = `
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
@@ -90,7 +90,7 @@ function mountDevNav(app, router) {
     nav.appendChild(btn)
   })
 
-  document.body.appendChild(nav)
+  app.appendChild(nav)
 
   // Hauptbereich nach oben schieben damit Nav nicht überlappt
   app.style.paddingBottom = '40px'

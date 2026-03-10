@@ -13,6 +13,7 @@ export class Router {
     window.addEventListener('hashchange', () => this.#resolve())
   }
 
+
   // Route registrieren: router.on('/novel', NovelScreen)
   on(path, screenFn) {
     this.#routes[path] = screenFn
